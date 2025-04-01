@@ -1,50 +1,36 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
-
     static class Car {
         private String name;
         private double speed;
-
 
         public Car(String name, double speed) {
             this.name = name;
             this.speed = speed;
         }
 
-
         public String getName() {
             return name;
         }
-
-
-
-
 
         public double calculateDistance() {
             return speed * 24; // км
         }
     }
 
-
     static class Race {
         private List<Car> cars;
-
 
         public Race() {
             cars = new ArrayList<>();
         }
 
-
         public void addCar(Car car) {
             cars.add(car);
         }
-
 
         public Car ourLeader() {
             Car leader = null;
@@ -73,14 +59,17 @@ public class Main {
             int speed;
 
             while (true) {
-                System.out.println("Введите скорость машины №" + i );
-                speed = scanner.nextInt();
-                scanner.nextLine();
+                System.out.println("Введите скорость машины №" + i);
+                try {
+                    speed = Integer.parseInt(scanner.nextLine());
 
-                if (speed > 0 && speed <= 250) {
-                    break;
-                } else {
-                    System.out.println("Некорректная скорость! Попробуйте снова.");
+                    if (speed >= 0 && speed <= 250) {
+                        break;
+                    } else {
+                        System.out.println("Некорректная скорость! Скорость должна быть от 0 до 250. Попробуйте снова.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Пожалуйста, введите числовое значение для скорости.");
                 }
             }
 
@@ -91,7 +80,8 @@ public class Main {
         Car leader = race.ourLeader();
 
         if (leader != null) {
-            System.out.println("Самая быстрая машина: " + leader.getName());
+            System.out.println("Самая быстрая машина: " + leader.getName() +
+                    ", которая проедет " + leader.calculateDistance() + " км за 24 часа.");
         } else {
             System.out.println("Не удалось определить лидера гонки.");
         }
